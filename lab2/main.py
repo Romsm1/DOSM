@@ -28,6 +28,25 @@ def main():
     else:
         print("В инвентаре2 нет алмазов.")
 
+    t1 = Time(2, 30, 15)
+    t2 = Time(1, 45, 30)
+    
+    print("Время 1:", t1)
+    print("Время 2:", t2)
+    
+    sum_time = t1 + t2
+    print("Сумма времени:", sum_time)
+    
+    diff_time = t1 - t2
+    print("Разница времени:", diff_time)
+    
+    print("Общее количество секунд в t1:", t1.total_seconds())
+    print("Общее количество секунд в t2:", t2.total_seconds())
+    
+    if t1 == t2:
+        print("Времена равны")
+    else:
+        print("Времена не равны"
 
 if __name__ == "__main__":
     main()
