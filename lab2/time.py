@@ -35,5 +35,29 @@ class Time(Seconds, Minutes, Hours):
         Minutes.__init__(self, minutes)
         Hours.__init__(self, hours)
 
+    
     def __str__(self):
-        return
+        return f"{self._hours}h {self._minutes}m {self._seconds}s"
+    
+    def __add__(self, other):
+        total_seconds = self.total_seconds() + other.total_seconds()
+        return Time.from_seconds(total_seconds)
+    
+    def __sub__(self, other):
+        total_seconds = self.total_seconds() - other.total_seconds()
+        return Time.from_seconds(max(total_seconds, 0))
+    
+    def __eq__(self, other):
+        return self.total_seconds() == other.total_seconds()
+    
+    def total_seconds(self):
+        return self._hours * 3600 + self._minutes * 60 + self._seconds
+    
+    @classmethod
+    def from_seconds(cls, total_seconds):
+        hours = total_seconds // 3600
+        total_seconds %= 3600
+        minutes = total_seconds // 60
+        seconds = total_seconds % 60
+        return cls(hours, minutes, seconds)
+
