@@ -14,17 +14,15 @@ class WheeledVehicle(Vehicle):
     def check_tires(self):
         return "Tires checked"
 
-class CargoTransport(Vehicle):
-    def __init__(self, max_speed, fuel_type, cargo_capacity):
-        super().__init__(max_speed, fuel_type)
+class CargoTransport:
+    def __init__(self, cargo_capacity):
         self.cargo_capacity = cargo_capacity
     
     def load_cargo(self):
         return "Cargo loaded"
 
-class PassengerTransport(Vehicle):
-    def __init__(self, max_speed, fuel_type, passenger_capacity):
-        super().__init__(max_speed, fuel_type)
+class PassengerTransport:
+    def __init__(self, passenger_capacity):
         self.passenger_capacity = passenger_capacity
     
     def board_passengers(self):
@@ -33,15 +31,14 @@ class PassengerTransport(Vehicle):
 class HeavyDutyVehicle(WheeledVehicle, CargoTransport):
     def __init__(self, max_speed, fuel_type, wheel_count, cargo_capacity, max_weight):
         WheeledVehicle.__init__(self, max_speed, fuel_type, wheel_count)
-        CargoTransport.__init__(self, max_speed, fuel_type, cargo_capacity)
+        CargoTransport.__init__(self, cargo_capacity)
         self.max_weight = max_weight
     
     def reinforce_frame(self):
         return "Frame reinforced"
 
-class EcoFriendlyVehicle(Vehicle):
-    def __init__(self, max_speed, fuel_type, emission_level):
-        super().__init__(max_speed, fuel_type)
+class EcoFriendlyVehicle:
+    def __init__(self, emission_level):
         self.emission_level = emission_level
     
     def reduce_emission(self):
@@ -49,12 +46,9 @@ class EcoFriendlyVehicle(Vehicle):
 
 class HybridDeliveryVan(HeavyDutyVehicle, PassengerTransport, EcoFriendlyVehicle):
     def __init__(self, max_speed, fuel_type, wheel_count, cargo_capacity, max_weight, passenger_capacity, emission_level):
-        Vehicle.__init__(self, max_speed, fuel_type)  # Инициализируем базовый класс напрямую
-        WheeledVehicle.__init__(self, max_speed, fuel_type, wheel_count)
-        CargoTransport.__init__(self, max_speed, fuel_type, cargo_capacity)
-        PassengerTransport.__init__(self, max_speed, fuel_type, passenger_capacity)
-        EcoFriendlyVehicle.__init__(self, max_speed, fuel_type, emission_level)
-        self.max_weight = max_weight
+        HeavyDutyVehicle.__init__(self, max_speed, fuel_type, wheel_count, cargo_capacity, max_weight)
+        PassengerTransport.__init__(self, passenger_capacity)
+        EcoFriendlyVehicle.__init__(self, emission_level)
     
     def status(self):
         return (f"Speed: {self.max_speed}, Fuel: {self.fuel_type}, Cargo: {self.cargo_capacity}kg, "
