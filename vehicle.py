@@ -4,7 +4,10 @@ class Vehicle:
         self.fuel_type = fuel_type
 
     def start_engine(self):
-        return "Engine started"
+        print(f"Engine started for {self.__class__.__name__}.")
+
+    def __str__(self):
+        return f"{self.__class__.__name__}: Max Speed={self.max_speed}, Fuel Type={self.fuel_type}"
 
 
 class WheeledVehicle(Vehicle):
@@ -13,7 +16,7 @@ class WheeledVehicle(Vehicle):
         self.wheel_count = wheel_count
 
     def check_tires(self):
-        return "Tires checked"
+        print(f"Checking tires for {self.__class__.__name__}. All {self.wheel_count} tires are in good condition.")
 
 
 class CargoTransport(Vehicle):
@@ -21,8 +24,11 @@ class CargoTransport(Vehicle):
         super().__init__(max_speed, fuel_type)
         self.cargo_capacity = cargo_capacity
 
-    def load_cargo(self):
-        return "Cargo loaded"
+    def load_cargo(self, weight):
+        if weight <= self.cargo_capacity:
+            print(f"Loaded {weight} kg of cargo into {self.__class__.__name__}.")
+        else:
+            print(f"Cargo capacity exceeded! Cannot load {weight} kg.")
 
 
 class PassengerTransport(Vehicle):
@@ -30,8 +36,11 @@ class PassengerTransport(Vehicle):
         super().__init__(max_speed, fuel_type)
         self.passenger_capacity = passenger_capacity
 
-    def board_passengers(self):
-        return "Passengers boarded"
+    def board_passengers(self, passengers):
+        if passengers <= self.passenger_capacity:
+            print(f"Boarded {passengers} passengers into {self.__class__.__name__}.")
+        else:
+            print(f"Passenger capacity exceeded! Cannot board {passengers} passengers.")
 
 
 class HeavyDutyVehicle(WheeledVehicle, CargoTransport):
@@ -41,7 +50,7 @@ class HeavyDutyVehicle(WheeledVehicle, CargoTransport):
         self.max_weight = max_weight
 
     def reinforce_frame(self):
-        return "Frame reinforced"
+        print(f"Reinforcing frame for {self.__class__.__name__} to handle up to {self.max_weight} kg.")
 
 
 class EcoFriendlyVehicle(Vehicle):
@@ -50,29 +59,48 @@ class EcoFriendlyVehicle(Vehicle):
         self.emission_level = emission_level
 
     def reduce_emission(self):
-        return "Emissions reduced"
+        print(f"Reducing emissions for {self.__class__.__name__} to {self.emission_level} level.")
 
 
 class HybridDeliveryVan(HeavyDutyVehicle, PassengerTransport, EcoFriendlyVehicle):
-    def __init__(self, max_speed, fuel_type, wheel_count, cargo_capacity, max_weight, passenger_capacity,
-                 emission_level):
-        Vehicle.__init__(self, max_speed, fuel_type)  # Инициализируем базовый класс напрямую
-        WheeledVehicle.__init__(self, max_speed, fuel_type, wheel_count)
-        CargoTransport.__init__(self, max_speed, fuel_type, cargo_capacity)
+    def __init__(self, max_speed, fuel_type, wheel_count, cargo_capacity, max_weight, passenger_capacity, emission_level):
+        HeavyDutyVehicle.__init__(self, max_speed, fuel_type, wheel_count, cargo_capacity, max_weight)
         PassengerTransport.__init__(self, max_speed, fuel_type, passenger_capacity)
         EcoFriendlyVehicle.__init__(self, max_speed, fuel_type, emission_level)
-        self.max_weight = max_weight
 
     def status(self):
-        return (f"Speed: {self.max_speed}, Fuel: {self.fuel_type}, Cargo: {self.cargo_capacity}kg, "
-                f"Passengers: {self.passenger_capacity}, Emissions: {self.emission_level}")
+        print("Hybrid Delivery Van Status:")
+        print(f"- Max Speed: {self.max_speed}")
+        print(f"- Fuel Type: {self.fuel_type}")
+        print(f"- Wheel Count: {self.wheel_count}")
+        print(f"- Cargo Capacity: {self.cargo_capacity} kg")
+        print(f"- Max Weight: {self.max_weight} kg")
+        print(f"- Passenger Capacity: {self.passenger_capacity}")
+        print(f"- Emission Level: {self.emission_level}")
 
 
-# Пример использования:
-van = HybridDeliveryVan(120, "Electric", 4, 2000, 5000, 6, "Low")
-print(van.start_engine())
-print(van.load_cargo())
-print(van.board_passengers())
-print(van.reinforce_frame())
-print(van.reduce_emission())
-print(van.status())
+# Пример использования
+if __name__ == "__main__":
+    # Создание гибридного фургона
+    hybrid_van = HybridDeliveryVan(
+        max_speed=120,
+        fuel_type="Electric/Hybrid",
+        wheel_count=4,
+        cargo_capacity=1000,
+        max_weight=2000,
+        passenger_capacity=4,
+        emission_level="Low"
+    )
+
+    # Проверка методов
+    hybrid_van.start_engine()
+    hybrid_van.check_tires()
+    hybrid_van.load_cargo(800)
+    hybrid_van.board_passengers(3)
+    hybrid_van.reinforce_frame()
+    hybrid_van.reduce_emission()
+    hybrid_van.status()
+
+    # Попытка загрузить слишком много груза или пассажиров
+    hybrid_van.load_cargo(1500)  # Превышение грузоподъемности
+    hybrid_van.board_passengers(5)  # Превышение вместимости пассажиров
