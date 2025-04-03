@@ -49,9 +49,12 @@ class EcoFriendlyVehicle(Vehicle):
 
 class HybridDeliveryVan(HeavyDutyVehicle, PassengerTransport, EcoFriendlyVehicle):
     def __init__(self, max_speed, fuel_type, wheel_count, cargo_capacity, max_weight, passenger_capacity, emission_level):
-        HeavyDutyVehicle.__init__(self, max_speed, fuel_type, wheel_count, cargo_capacity, max_weight)
+        Vehicle.__init__(self, max_speed, fuel_type)  # Инициализируем базовый класс напрямую
+        WheeledVehicle.__init__(self, max_speed, fuel_type, wheel_count)
+        CargoTransport.__init__(self, max_speed, fuel_type, cargo_capacity)
         PassengerTransport.__init__(self, max_speed, fuel_type, passenger_capacity)
         EcoFriendlyVehicle.__init__(self, max_speed, fuel_type, emission_level)
+        self.max_weight = max_weight
     
     def status(self):
         return (f"Speed: {self.max_speed}, Fuel: {self.fuel_type}, Cargo: {self.cargo_capacity}kg, "
