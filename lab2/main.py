@@ -46,7 +46,7 @@ def main():
     if t1 == t2:
         print("Времена равны")
     else:
-        print("Времена не равны"
+        print("Времена не равны")
 
 if __name__ == "__main__":
     main()
