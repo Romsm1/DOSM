@@ -1,0 +1,61 @@
+from typing import TypeVar, Generic, List, Tuple
+
+# Определяем обобщённые типы данных
+T = TypeVar('T')  # Тип для идентификатора задачи
+U = TypeVar('U')  # Тип для описания задачи
+V = TypeVar('V')  # Тип для приоритета задачи
+
+class TaskManager(Generic[T, U, V]):
+    def __init__(self):
+        """
+        Конструктор для создания пустого списка задач.
+        """
+        self._tasks: List[Tuple[T, U, V]] = []
+
+    def add_task(self, task_id: T, description: U, priority: V) -> None:
+        """
+        Добавляет задачу в список.
+        """
+        self._tasks.append((task_id, description, priority))
+
+    def get_highest_priority_task(self) -> Tuple[T, U, V]:
+        """
+        Возвращает задачу с наивысшим приоритетом.
+        """
+        if not self._tasks:
+            raise ValueError("Список задач пуст")
+        
+        # Определяем задачу с максимальным приоритетом
+        if isinstance(self._tasks[0][2], bool):  # Если приоритет — bool
+            return max(self._tasks, key=lambda task: task[2])  # task[2] — приоритет
+        else:  # Если приоритет — число или другой тип с поддержкой сравнения
+            return max(self._tasks, key=lambda task: task[2])  # task[2] — приоритет
+
+    def __str__(self) -> str:
+        """
+        Возвращает строковое представление всех задач.
+        """
+        if not self._tasks:
+            return "Список задач пуст"
+        return "\n".join(
+            f"Задача(id={task[0]}, описание='{task[1]}', приоритет={task[2]})"
+            for task in self._tasks
+        )
+
+# Пример использования с типами int, str, int
+task_manager_1 = TaskManager[int, str, int]()
+task_manager_1.add_task(1, "Написать отчёт", 5)
+task_manager_1.add_task(2, "Провести совещание", 3)
+task_manager_1.add_task(3, "Подготовить презентацию", 10)
+print("Список задач (int, str, int):")
+print(task_manager_1)
+print("Наивысший приоритет:", task_manager_1.get_highest_priority_task())
+
+# Пример использования с типами str, str, bool
+task_manager_2 = TaskManager[str, str, bool]()
+task_manager_2.add_task("A", "Купить продукты", False)
+task_manager_2.add_task("B", "Выгулять собаку", True)
+task_manager_2.add_task("C", "Позвонить другу", False)
+print("\nСписок задач (str, str, bool):")
+print(task_manager_2)
+print("Наивысший приоритет:", task_manager_2.get_highest_priority_task())
