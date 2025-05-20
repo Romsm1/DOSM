@@ -1,46 +1,37 @@
 class Device:
     def __init__(self, power):
         self.power = power
+        print(f"Инициализация Device с мощностью {self.power}")
 
     def turn_on(self):
-        print(f"Включение устройства с мощностью {self.power}")
-
+        print(f"Устройство включено. Мощность: {self.power}W")
 
 class NetworkedDevice(Device):
     def __init__(self, power, ip_address):
-        super().__init__(power)
+        Device.__init__(self, power)
         self.ip_address = ip_address
+        print(f"Инициализация NetworkedDevice с IP {self.ip_address}")
 
     def connect(self):
-        print(f"Подключение к сети с IP-адресом {self.ip_address}")
-
-    def turn_on(self):
-        print(f"Включение сетевого устройства с мощностью {self.power}")
-
+        print(f"Подключено к сети через {self.ip_address}")
 
 class PortableDevice(Device):
     def __init__(self, power, battery_level):
-        super().__init__(power)
+        Device.__init__(self, power)
         self.battery_level = battery_level
+        print(f"Инициализация PortableDevice с зарядом {self.battery_level}%")
 
     def charge(self):
-        print(f"Зарядка устройства с уровнем батареи {self.battery_level}")
-
-    def turn_on(self):
-        print(f"Включение портативного устройства с мощностью {self.power}")
-
+        print(f"Зарядка ({self.battery_level}%)")
 
 class SmartPhone(NetworkedDevice, PortableDevice):
     def __init__(self, power, ip_address, battery_level):
         NetworkedDevice.__init__(self, power, ip_address)
         PortableDevice.__init__(self, power, battery_level)
+        print("Инициализация SmartPhone завершена")
 
     def call(self):
-        print("Совершение телефонного звонка")
+        print("Совершение звонка")
 
-
-smartphone = SmartPhone(power=50, ip_address="192.168.1.100", battery_level=80)
-smartphone.turn_on()
-smartphone.connect()
-smartphone.charge()
-smartphone.call()
+print("\n=== Тест проблемной версии ===")
+problem_phone = SmartPhone(10, "192.168.1.1", 80)
