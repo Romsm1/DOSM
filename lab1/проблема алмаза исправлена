@@ -1,44 +1,43 @@
 class Device:
     def __init__(self, power):
         self.power = power
-    
-    def turn_on(self):
-        print(f"Устройство включено! Мощность: {self.power}W")
+        print(f"Инициализация Device с мощностью {self.power}")
 
-# Используем super() для правильного наследования
+    def turn_on(self):
+        print(f"Базовое включение. Мощность: {self.power}W")
+
 class NetworkedDevice(Device):
-    def __init__(self, power, ip_address):
-        super().__init__(power)
+    def __init__(self, power, ip_address, **kwargs):
+        super().__init__(power, **kwargs)
         self.ip_address = ip_address
-    
+        print(f"Инициализация NetworkedDevice с IP {self.ip_address}")
+
     def connect(self):
-        print(f"Подключение к сети с IP: {self.ip_address}")
+        print(f"Сетевое подключение: {self.ip_address}")
 
 class PortableDevice(Device):
-    def __init__(self, power, battery_level):
-        super().__init__(power)
+    def __init__(self, power, battery_level, **kwargs):
+        super().__init__(power, **kwargs)
         self.battery_level = battery_level
-    
-    def charge(self):
-        print(f"Зарядка... Уровень батареи: {self.battery_level}%")
+        print(f"Инициализация PortableDevice. Заряд: {self.battery_level}%")
 
-# Теперь правильно наследуем
+    def charge(self):
+        print(f"Процесс зарядки ({self.battery_level}%)")
+
 class SmartPhone(NetworkedDevice, PortableDevice):
     def __init__(self, power, ip_address, battery_level):
-        super().__init__(power=power, ip_address=ip_address)
-        # Дополнительная инициализация для PortableDevice
-        PortableDevice.__init__(self, power, battery_level)
-    
+        super().__init__(power=power, ip_address=ip_address, battery_level=battery_level)
+        print("Инициализация SmartPhone завершена")
+
+    def turn_on(self):
+        print("=== Процесс включения ===")
+        super().turn_on()
+        print("Дополнительные системы активированы")
+
     def call(self):
-        print("Дзынь-дзынь! Идёт звонок~ (＾▽＾)")
+        print("🔊 Совершение звонка")
 
-# Демонстрация работы
-print("\nИсправленная версия:")
-phone = SmartPhone(power=10, ip_address="192.168.1.42", battery_level=80)
-phone.turn_on()      # Работает без проблем!
-phone.connect()      # Подключение
-phone.charge()       # Зарядка
-phone.call()         # Звонок
-
-print("\nПорядок разрешения методов (MRO):")
-print(SmartPhone.mro())  # Показывает порядок поиска методов
+print("\n=== Тест исправленной версии ===")
+good_phone = SmartPhone(15, "192.168.1.2", 85)
+good_phone.turn_on()
+good_phone.call()
