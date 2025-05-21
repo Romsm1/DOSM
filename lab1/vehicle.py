@@ -97,3 +97,7 @@ hybrid_van.status()
 
 hybrid_van.load_cargo(4500)
 hybrid_van.board_passengers(8)
+
+
+почему не super().__init__() и что это и это WheeledVehicle.__init__(self, max_speed, fuel_type, wheel_count)
+        CargoTransport.__init__(self, max_speed, fuel_type, cargo_capacity)
