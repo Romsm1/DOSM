@@ -8,17 +8,19 @@ class Seconds:
     def __int__(self):
         return self._seconds
 
+
 class Minutes:
     def __init__(self, minutes):
-        self.minutes = minutes
+        self._minutes = minutes  # Изменил на _minutes для единообразия
 
     def __str__(self):
-        return f'{self.minutes}m.'
+        return f'{self._minutes}m.'
 
     def __int__(self):
-        return self.minutes
+        return self._minutes
 
-class  Hours:
+
+class Hours:
     def __init__(self, hours):
         self._hours = hours
 
@@ -26,7 +28,7 @@ class  Hours:
         return f'{self._hours}h.'
 
     def __int__(self):
-        return {self._hours}
+        return self._hours  # Исправил возвращаемое значение (был словарь)
 
 
 class Time(Seconds, Minutes, Hours):
@@ -35,29 +37,28 @@ class Time(Seconds, Minutes, Hours):
         Minutes.__init__(self, minutes)
         Hours.__init__(self, hours)
 
-    
     def __str__(self):
         return f"{self._hours}h {self._minutes}m {self._seconds}s"
-    
+
     def __add__(self, other):
         total_seconds = self.total_seconds() + other.total_seconds()
-        return Time.from_seconds(total_seconds)
-    
-    def __sub__(self, other):
-        total_seconds = self.total_seconds() - other.total_seconds()
-        return Time.from_seconds(max(total_seconds, 0))
-    
-    def __eq__(self, other):
-        return self.total_seconds() == other.total_seconds()
-    
-    def total_seconds(self):
-        return self._hours * 3600 + self._minutes * 60 + self._seconds
-    
-    @classmethod
-    def from_seconds(cls, total_seconds):
         hours = total_seconds // 3600
         total_seconds %= 3600
         minutes = total_seconds // 60
         seconds = total_seconds % 60
-        return cls(hours, minutes, seconds)
+        return Time(hours, minutes, seconds)
 
+    def __sub__(self, other):
+        total_seconds = self.total_seconds() - other.total_seconds()
+        total_seconds = max(total_seconds, 0)
+        hours = total_seconds // 3600
+        total_seconds %= 3600
+        minutes = total_seconds // 60
+        seconds = total_seconds % 60
+        return Time(hours, minutes, seconds)
+
+    def __eq__(self, other):
+        return self.total_seconds() == other.total_seconds()
+
+    def total_seconds(self):
+        return self._hours * 3600 + self._minutes * 60 + self._seconds
