@@ -11,7 +11,7 @@ class Seconds:
 
 class Minutes:
     def __init__(self, minutes):
-        self._minutes = minutes  # Изменил на _minutes для единообразия
+        self._minutes = minutes
 
     def __str__(self):
         return f'{self._minutes}m.'
@@ -28,8 +28,7 @@ class Hours:
         return f'{self._hours}h.'
 
     def __int__(self):
-        return self._hours  # Исправил возвращаемое значение (был словарь)
-
+        return self._hours 
 
 class Time(Seconds, Minutes, Hours):
     def __init__(self, hours=0, minutes=0, seconds=0):
