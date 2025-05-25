@@ -5,7 +5,7 @@ class Inventory:
         self.__items = {}
         self.__weight_limit = capacity
         self.__current_weight = 0
-        self.__slots = 0
+       
 
     def __str__(self):
         return f'Инвентарь (вместимость: {self.__weight_limit}кг.), (содержимое: {self.__items})'
