@@ -28,3 +28,4 @@ print()
 divide(a=50, b=2)
 print()
 divide(42, 0)
+ 
