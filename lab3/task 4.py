@@ -15,6 +15,7 @@ def log(func):
         finally:
             elapsed_time = time.time() - start_time
             print(f'Время выполнения {func.__name__}: {elapsed_time} секунд')
+
     return wrapper
 
 
@@ -22,6 +23,9 @@ def log(func):
 def divide(a, b):
     return a / b
 
-# Тесты
+
 divide(50, 2)
+print()
+divide(a=50, b=2)
+print()
 divide(42, 0)
