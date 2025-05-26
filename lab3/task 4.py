@@ -10,8 +10,7 @@ def log(func):
             print(f'Функция {func.__name__} завершилась успешно. Результат: {result}')
             return result
         except Exception as e:
-            print(f'Ошибка в функции {func.__name__}: {e}')
-            raise
+            print(f'Ошибка в функции {func.__name__}: {e}')
         finally:
             elapsed_time = time.time() - start_time
             print(f'Время выполнения {func.__name__}: {elapsed_time} секунд')
