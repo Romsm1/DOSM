@@ -19,7 +19,8 @@ class Student(Person):
     student_id: str
 
     def full_name(self) -> str:
-        return self.first_name
+         return f"{self.first_name} {self.last_name}"
+
 
     def get_id(self) -> str:
         return self.student_id
@@ -31,9 +32,9 @@ class Teacher(Person):
     last_name: str
     employee_id: str
     courses: list[str]
-
+
     def full_name(self) -> str:
-        return self.first_name
+         return f"{self.first_name} {self.last_name}"
 
     def get_id(self) -> str:
         return self.employee_id
