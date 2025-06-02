@@ -1,10 +1,10 @@
 class AutoRegister(type):
     def __new__(cls, name, bases, dct):
-        if not hasattr(new_class, 'registry'):
-            new_class.registry = []
-        else:
-            new_class.registry.append(new_class)
-        super().__new__(cls, name, bases, dct)
+        if not hasattr(cls, 'registry'):
+            cls.registry = []
+        if name != 'BaseModel':
+            cls.registry.append(name)
+        return super().__new__(cls, name, bases, dct)
 
 
 class BaseModel(metaclass=AutoRegister):
@@ -25,5 +25,5 @@ class Product(BaseModel):
         self.price = price
 
 
-for cls in BaseModel.registry:
-    print(cls.__name__)
+for name in AutoRegister.registry:
+    print(name)
