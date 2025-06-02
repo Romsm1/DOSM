@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-
 @dataclass
 class Book:
     title: str
@@ -8,11 +7,11 @@ class Book:
     year: int
     price: float
 
-    def sort_year(self):
-        return sorted(self, key=lambda b: b.year)
+    def sort_year(self, books):
+        return sorted(books, key=lambda b: b.year)
 
     def __iter__(self):
-        pass
+        return iter([self.title, self.author, self.year, self.price])
 
 
 books = [
@@ -21,7 +20,7 @@ books = [
     Book('Название3', 'Автор31', 1888, 450.43)
 ]
 
+sorted_books = books[0].sort_year(books)
 
-sorted_books = books[0].sort_year()
 for book in sorted_books:
-    print(book)
+    print(*book)  # Распаковка через итератор
