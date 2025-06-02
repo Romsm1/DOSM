@@ -10,7 +10,15 @@ class InterfaceChecker(type):
         return super().__new__(cls, name, bases, dct)
 
 
-class CorrectPlugin(metaclass=InterfaceChecker):
+class BasePlugin(metaclass=InterfaceChecker):
+    def load(self):
+        raise NotImplementedError("Метод load должен быть реализован")
+    
+    def save(self):
+        raise NotImplementedError("Метод save должен быть реализован")
+
+
+class CorrectPlugin(BasePlugin):
     def load(self):
         pass
 
@@ -19,7 +27,7 @@ class CorrectPlugin(metaclass=InterfaceChecker):
 
 
 try:
-    class BrokenPlugin(metaclass=InterfaceChecker):
+    class BrokenPlugin(BasePlugin):
         def save(self):
             pass
 
