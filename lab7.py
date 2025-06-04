@@ -34,7 +34,7 @@ class TXTProcessor(DataProcessor):
     def save_data(self, destination: str) -> None:
         print(f'Сохранение результата в {destination}')
         with open(destination, 'w', encoding='utf-8') as file:
-            file.write(f'Количество записей: {len(self.data)}')
+            file.write(f'Количество записей: {len(self.data)}\n')  # Записываем количество записей
 
 
 class CSVProcessor(DataProcessor):
@@ -55,7 +55,7 @@ class CSVProcessor(DataProcessor):
         print(f'Сохранение результата в {destination}')
         with open(destination, 'w', encoding='utf-8') as file:
             write = csv.writer(file)
-            write.writerow([f'Количество записей: {len(self.data)}'])  
+            write.writerow([f'Количество записей: {len(self.data)}'])
             write.writerow([len(self.data)])
 
 
@@ -78,22 +78,27 @@ class JSONProcessor(DataProcessor):
 
     def save_data(self, destination: str) -> None:
         print(f'Сохранение результата в {destination}')
-        result = {'Количество записей': len(self.data)}  
+        result = {'Количество записей': len(self.data)}
         with open(destination, 'w', encoding='utf-8') as file:
             json.dump(result, file, ensure_ascii=False, indent=4)
 
 
 csv_processor = CSVProcessor()
 json_processor = JSONProcessor()
+txt_processor = TXTProcessor()  
 
 csv_processor.load_data("data.csv")
 json_processor.load_data("data.json")
+txt_processor.load_data("data.txt")  
 
 csv_record_count = csv_processor.process_data()
 json_record_count = json_processor.process_data()
+txt_record_count = txt_processor.process_data()  
 
 print(f'Количество записей в CSV: {csv_record_count}')
-print(f'Количество записей в JSON: {json_record_count}')  
+print(f'Количество записей в JSON: {json_record_count}')
+print(f'Количество записей в TXT: {txt_record_count}')  
 
 csv_processor.save_data('output_csv.csv')
 json_processor.save_data('output_json.json')
+txt_processor.save_data('output_txt.txt')  
