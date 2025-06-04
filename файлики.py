@@ -19,4 +19,11 @@ json_data = [
 with open('data.json', 'w', encoding='utf-8') as jsonfile:
     json.dump(json_data, jsonfile, ensure_ascii=False, indent=4)
 
-print("Файлы data.csv и data.json успешно созданы.")
+# Создание data.txt
+with open('data.txt', 'w', encoding='utf-8') as txtfile:
+    txtfile.write("Имя, Возраст, Город\n")  # Заголовки
+    txtfile.write("Анна, 22, Москва\n")
+    txtfile.write("Иван, 30, Санкт-Петербург\n")
+    txtfile.write("Ольга, 27, Новосибирск\n")
+
+print("Файлы data.csv, data.json и data.txt успешно созданы.")
