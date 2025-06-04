@@ -19,7 +19,7 @@ def get_weather(city: str, api_key: str) -> str:
         return f"Ошибка запроса: {response.status_code}, {response.text}"
 
 # Ваш API-ключ
-api_key = "70acabdc0d8f58d5f3474440f06e4819"
+api_key = "3fe97555c0b93040c0c5897746b2294a"
 
 # Запрашиваем город у пользователя
 city = input("Введите название города: ")
