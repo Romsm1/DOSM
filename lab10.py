@@ -1,5 +1,4 @@
 import re
-from typing import List
 
 
 # Задание 1
@@ -9,7 +8,7 @@ def is_valid_email(email: str) -> bool:
 
 
 # Задание 2
-def extract_dates(text: str) -> List[str]:
+def extract_dates(text: str) -> list[str]:
     pattern = r'\b\d{2}[-/]\d{2}[-/]\d{4}\b'
     return re.findall(pattern, text)
 
@@ -44,17 +43,17 @@ def is_strong_password(password: str) -> bool:
 
 
 # Задание 5
-def extract_tags(html: str) -> List[str]:
+def extract_tags(html: str) -> list[str]:
     pattern = r'<\/?(\w+)'
     return re.findall(pattern, html)
 
 
 # Задание 6
-def find_repeated_words(text: str) -> List[str]:
+def find_repeated_words(text: str) -> list[str]:
     pattern = r'\b(\w+)\s+\1\b'
     return list(set(match.group(1) for match in re.finditer(pattern, text, re.IGNORECASE)))
 
 
 # Задание 7
-def split_words(text: str) -> List[str]:
+def split_words(text: str) -> list[str]:
     return re.findall(r'\b\w+\b', text)
