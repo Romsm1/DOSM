@@ -5,7 +5,7 @@ def get_weather(city: str, api_key: str) -> str:
     params = {
         "q": city,
         "appid": api_key,
-        "units": "metric"  # Для получения температуры в градусах Цельсия
+        "units": "metric"  
     }
 
     response = requests.get(url, params)
@@ -17,12 +17,9 @@ def get_weather(city: str, api_key: str) -> str:
         return f"Температура в {city}: {temperature}°C, Погода: {weather_description}."
     else:
         return f"Ошибка запроса: {response.status_code}, {response.text}"
-
-# Ваш API-ключ
+
 api_key = "3fe97555c0b93040c0c5897746b2294a"
-
-# Запрашиваем город у пользователя
+
 city = input("Введите название города: ")
-
-# Получаем погоду
+
 print(get_weather(city, api_key))
