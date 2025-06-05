@@ -74,5 +74,5 @@ def split_words(text: str) -> list[str]:
     return re.findall(r'\b\w+\b', text)
 
 print("Задание 7")
-text = "Тестовый, 2332233, текст"
+text = "Hello world!, how are you?"
 print(split_words(text))
